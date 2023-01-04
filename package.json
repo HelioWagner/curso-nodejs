@@ -2,6 +2,7 @@
   "name": "1606024-nodejs",
   "version": "1.0.0",
   "description": "Arquivos de NodeJS da Turma 1606024 - Targettrust",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
