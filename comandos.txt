@@ -1,0 +1,6 @@
+ nodemon server.js 
+
+bash 
+testar api
+npm start
+curl http://localhost:3033/
