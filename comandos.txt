@@ -4,3 +4,6 @@ bash
 testar api
 npm start
 curl http://localhost:3033/
+
+
+SHIFT+ALT+F - FORMATA ARQUIVO JSON NO VISUAL CODE

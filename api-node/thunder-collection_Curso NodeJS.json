@@ -1,0 +1,51 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "Curso NodeJS",
+    "dateExported": "2023-01-12T23:42:32.967Z",
+    "version": "1.1",
+    "folders": [],
+    "requests": [
+        {
+            "_id": "a038e65d-600a-490c-9a17-b9d749195657",
+            "colId": "373f12be-4ba6-4a80-9fe6-31365d18ab50",
+            "containerId": "",
+            "name": "Busca Departamentos com id",
+            "url": "localhost:3033/departamento/30",
+            "method": "DELETE",
+            "sortNum": 10000,
+            "created": "2023-01-12T23:35:42.981Z",
+            "modified": "2023-01-12T23:38:55.158Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "93968334-77e6-460b-ac66-046ba57fb3d0",
+            "colId": "373f12be-4ba6-4a80-9fe6-31365d18ab50",
+            "containerId": "",
+            "name": "Gravar Departamentos",
+            "url": "localhost:3033/departamentos/33",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-01-12T23:36:18.517Z",
+            "modified": "2023-01-12T23:36:18.517Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "be1af979-d974-4355-bcac-5ecacfcc0f73",
+            "colId": "373f12be-4ba6-4a80-9fe6-31365d18ab50",
+            "containerId": "",
+            "name": "Apagar Departamento",
+            "url": "localhost:3033/departamento",
+            "method": "DELETE",
+            "sortNum": 30000,
+            "created": "2023-01-12T23:41:34.883Z",
+            "modified": "2023-01-12T23:41:34.883Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
