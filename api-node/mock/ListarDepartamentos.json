@@ -1,0 +1,12 @@
+[
+    { 
+      "id_departamento": "1",
+      "nome": "Centro de Dados",
+      "sigla": "CPD"
+    },
+    { 
+        "id_departamento": "2",
+        "nome": "Rec Humanos",
+        "sigla": "RH"
+      }
+  ]
