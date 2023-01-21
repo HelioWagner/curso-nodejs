@@ -50,16 +50,16 @@ app.get('/departamentos', (req, res) => {
   //executa mock
   //res.send(listarDepartamentos)
   // console.log('departamentos')
-   if (useMock) {
-      res.send(listarDepartamentos)
-      return
-   }
+  if (useMock) {
+    res.send(listarDepartamentos)
+    return
+  }
   //Executa a query para o banco de dados
-  con.query('SELECT * FROM DEPARTAMENTOS ORDER BY NOME', (err,result) =>{
-   // console.log(result)
+  con.query('SELECT * FROM DEPARTAMENTOS ORDER BY NOME', (err, result) => {
+    // console.log(result)
     if (err) {
       res.status(500)
-      res.send(err) 
+      res.send(err)
       console.log(err)
     }
     res.send(result)
@@ -70,7 +70,7 @@ app.get('/departamentos', (req, res) => {
 })
 
 app.get('/departamentos/:idDepartamentos', (req, res) => {
-    const {idDepartamentos } = req.params
+  const { idDepartamentos } = req.params
   // res.send(`<h1> Get Departamento - id:${idDepartamentos} </h1>`)
   // console.log(`Get Departamento - id:${idDepartamentos}`)
 
@@ -79,11 +79,11 @@ app.get('/departamentos/:idDepartamentos', (req, res) => {
     return
   }
 
-  con.query(`SELECT * FROM DEPARTAMENTOS WHERE id_departamento = ${idDepartamentos}`, (err,result) =>{
+  con.query(`SELECT * FROM DEPARTAMENTOS WHERE id_departamento = ${idDepartamentos}`, (err, result) => {
     // console.log(result)
     if (err) {
       res.status(500)
-      res.send(err) 
+      res.send(err)
       console.log(err)
     }
     res.send(result)
@@ -127,7 +127,7 @@ app.post('/departamentos', (req, res) => {
       message: 'Wrong or insufficient parameters',
       parameters_received: req.body
     })
-    return 
+    return
   }
 
   con.query(`INSERT INTO DEPARTAMENTOS (nome, sigla) VALUES ('${nome}', '${sigla}')`, (err, result) => {
@@ -142,24 +142,122 @@ app.post('/departamentos', (req, res) => {
       res.send({
         message: 'Register inserted with success',
         insertId: result.insertId
-      })  
+      })
       return
     }
     res.send(result)
   })
 })
-  
+
+/**
+ * @swagger
+ * 
+ * /departamento/{idDepartamentos}:
+ *  put:
+ *    description: Altera um departamento na base
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - in: formData
+ *        name: nome
+ *        description: nome do departamento 
+ *        required: true
+ *        type: string
+ *      - in: path
+ *        name: idDepartamentos
+ *        required: true
+ *        type: integer 
+ *        description: idDepartamentos do departamento  
+ *    responses:
+ *      200:
+ *        description: registro inserido com sucesso
+ *      500:
+ *        description: erro do banco de dados
+ */
 app.put('/departamento/:idDepartamentos', (req, res) => {
-  const {idDepartamentos } = req.params
-  res.send(`<h1> Put Departamento - id:${idDepartamentos} </h1>`)
-  console.log(`Put Departamento - id:${idDepartamentos}`)
+  const { idDepartamentos } = req.params
+  const { nome = '' } = req.body
+  con.query(`UPDATE DEPARTAMENTOS SET NOME = '${nome}' WHERE id_departamento = ${idDepartamentos}`, (err, result) => {
+    if (err) {
+      res.status(500)
+      res.send(err)
+      return
+    }
+
+    //Em caso de sucesso:
+    if (result.affectedRows) {
+      res.send({
+        message: 'Alterado com success',
+        affectedRows: result.affectedRows
+      })
+      return
+    }
+    res.send(result)
+  })
+
+
 })
 
+/**
+ * @swagger
+ * 
+ * /departamento/{idDepartamentos}:
+ *  delete:
+ *    description: deleta um departamento na base
+ *    produces:
+ *      - application/json
+ *    parameters:
+ *      - in: path
+ *        name: idDepartamentos
+ *        required: true
+ *        type: integer 
+ *        description: idDepartamentos do departamento  
+ *    responses:
+ *      200:
+ *        description: registro excluído com sucesso
+ *      500:
+ *        description: erro do banco de dados
+ */
 app.delete('/departamento/:idDepartamentos', (req, res) => {
-  const {idDepartamentos } = req.params
-  res.send(`<h1> Delete Departamento - id:${idDepartamentos} </h1>`)
-  console.log(`Delete Departamento - id:${idDepartamentos}`)
-})
+  //const {idDepartamentos } = req.params
+  //res.send(`<h1> Delete Departamento - id:${idDepartamentos} </h1>`)
+  //nome da variavel deve ser igual do parametroa da url
+  const { idDepartamentos } = req.params
+  //verifico se foi informado departamento
+
+  //const method = req.method
+  //console.log(`${req.body} /departamento`)
+  //const { idDepartamentos = '' } = req.body
+  //console.log(idDepartamentos)
+  if (idDepartamentos === '') {
+    res.send({
+      message: 'Wrong or insufficient parameters',
+      parameters_received: req.body
+    })
+    return
+  }
+
+  console.log(idDepartamentos)
+
+  con.query(`DELETE FROM DEPARTAMENTOS WHERE id_departamento = ${idDepartamentos}`, (err, result) => {
+    if (err) {
+      res.status(500)
+      res.send(err)
+      return
+    }
+
+    //Em caso de sucesso:
+    if (result.affectedRows) {
+      res.send({
+        message: 'DELETE with success',
+        affectedRows: result.affectedRows
+      })
+      return
+    }
+    res.send(result)
+  })
+}
+)
 
 //exemplos utilizando diversos parametros
 // Exemplo utilizando diversos formatos de parametros
@@ -179,6 +277,6 @@ app.get('/funcionarios/:busca', (req, res) => {
   })
 })
 
-app.listen(3033,() => {
+app.listen(3033, () => {
   console.log('servidor executando')
 })
