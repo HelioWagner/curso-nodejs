@@ -5,6 +5,9 @@ import listarDepartamentos from './mock/ListarDepartamentos.json' assert{type: '
 import listarDepartamento from './mock/ListarDepartamento.json' assert{type: 'json'}
 import swaggerJSDoc from 'swagger-jsdoc'
 import swaggerUI from 'swagger-ui-express'
+import axios from 'axios'
+import cors from 'cors'
+//import handler from './header.js'
 
 //para node 16 deve passar assert
 //import ListarDepartamentos from './mock/ListarDepartamentos.json' assert{ type: 'json'}
@@ -29,6 +32,7 @@ const swaggerSpec = swaggerJSDoc(options)
 
 app.use('/swagger-ui', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 
+
 /**
  * @swagger
  * 
@@ -45,6 +49,7 @@ app.use('/swagger-ui', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
 //////////////////////////////////////////////////
 
 app.use(express.static('public'))
+app.use(cors())
 
 app.get('/departamentos', (req, res) => {
   //executa mock
@@ -276,6 +281,17 @@ app.get('/funcionarios/:busca', (req, res) => {
     res.send(result)
   })
 })
+
+//rota para BFF: executa a chamada de outra API
+// axios.get(`${baseUrl}/feriados/v1/${ano}`)
+//     .then(response => {
+//       res.send(response.data)
+//     })
+//     .catch(erro => {
+//       console.log(erro)
+//       res.send()
+//     })
+// })
 
 app.listen(3033, () => {
   console.log('servidor executando')
